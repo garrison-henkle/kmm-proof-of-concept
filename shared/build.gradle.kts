@@ -133,6 +133,7 @@ buildkonfig {
 
 kmmbridge {
     spm()
+    githubReleaseArtifacts()
 }
 
 kswift {
