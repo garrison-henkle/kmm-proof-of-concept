@@ -120,7 +120,6 @@ buildkonfig {
     packageName = Config.packageName
 
     val apiDomain = "apiDomain"
-    val test = "test"
 
     defaultConfigs {
         buildConfigField(
