@@ -132,8 +132,9 @@ buildkonfig {
 }
 
 kmmbridge {
-    spm()
+    githubReleaseVersions()
     githubReleaseArtifacts()
+    spm()
 }
 
 kswift {
