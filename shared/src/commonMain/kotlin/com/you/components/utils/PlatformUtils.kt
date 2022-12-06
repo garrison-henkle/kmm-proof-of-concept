@@ -2,6 +2,9 @@ package com.you.components.utils
 
 import io.ktor.client.*
 
+/**
+ * Client for making HTTP requests
+ */
 internal expect val client: HttpClient
 
 /**

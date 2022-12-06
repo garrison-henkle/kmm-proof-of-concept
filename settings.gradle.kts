@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "You_Components"
 include(":shared")
-include(":tester")
+include(":android")

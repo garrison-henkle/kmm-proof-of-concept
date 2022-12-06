@@ -17,7 +17,7 @@ interface VideoApi {
         site: String?,
         resultCount: Int,
         freshness: Freshness
-    ): Response<List<Video>>
+    ): Response<VideoList>
 }
 
 class YouVideoApi : VideoApi {
@@ -26,7 +26,7 @@ class YouVideoApi : VideoApi {
         site: String?,
         resultCount: Int,
         freshness: Freshness
-    ): Response<List<Video>> {
+    ): Response<VideoList> {
         val response = client.request {
             method = HttpMethod.Get
             url {
@@ -47,7 +47,7 @@ class YouVideoApi : VideoApi {
             HttpStatusCode.OK -> {
                 val result = response.body<VideoResult>()
                 val videos = result.searchResults.results.map(Video.Companion::fromVideoResult)
-                Response.Success(videos)
+                Response.Success(VideoList(videos))
             }
             else -> Response.Error(
                 ex = Exception(response.bodyAsText()),
@@ -56,3 +56,5 @@ class YouVideoApi : VideoApi {
         }
     }
 }
+
+data class VideoList(val data: List<Video>)

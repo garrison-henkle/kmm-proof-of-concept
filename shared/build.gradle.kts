@@ -6,10 +6,6 @@ import org.jetbrains.kotlin.konan.properties.loadProperties
 val localProperties = loadProperties(rootProject.file("local.properties").absolutePath)
 
 buildscript {
-    repositories {
-        mavenCentral()
-    }
-
     dependencies {
         classpath(ClasspathDeps.kotlinGradle)
         classpath(ClasspathDeps.buildKonfig)
@@ -100,6 +96,8 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
     }
+
+
 }
 
 java {
@@ -135,6 +133,7 @@ kmmbridge {
     githubReleaseVersions()
     githubReleaseArtifacts()
     spm()
+    versionPrefix.set("0.0")
 }
 
 kswift {
@@ -145,4 +144,14 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
     kotlinOptions {
         jvmTarget = "1.8"
     }
+}
+
+task("publishKMMArtifacts", type = GradleBuild::class) {
+    val token = localProperties.getProperty("githubPublishToken")
+    val repo = localProperties.getProperty("githubRepo")
+    startParameter.projectProperties = mapOf(
+        "GITHUB_PUBLISH_TOKEN" to token,
+        "GITHUB_REPO" to repo
+    )
+    tasks = listOf("kmmBridgePublish")
 }

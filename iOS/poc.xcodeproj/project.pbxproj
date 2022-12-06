@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85056790293E557B007DCF95 /* shared in Frameworks */ = {isa = PBXBuildFile; productRef = 8505678F293E557B007DCF95 /* shared */; };
 		85536A6B293D77BE00C54F30 /* pocApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85536A6A293D77BE00C54F30 /* pocApp.swift */; };
 		85536A6D293D77BE00C54F30 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85536A6C293D77BE00C54F30 /* ContentView.swift */; };
 		85536A6F293D77BF00C54F30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85536A6E293D77BF00C54F30 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85056790293E557B007DCF95 /* shared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +145,9 @@
 			dependencies = (
 			);
 			name = poc;
+			packageProductDependencies = (
+				8505678F293E557B007DCF95 /* shared */,
+			);
 			productName = poc;
 			productReference = 85536A67293D77BE00C54F30 /* poc.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +220,9 @@
 				Base,
 			);
 			mainGroup = 85536A5E293D77BE00C54F30;
+			packageReferences = (
+				8505678E293E557B007DCF95 /* XCRemoteSwiftPackageReference "kmm-proof-of-concept" */,
+			);
 			productRefGroup = 85536A68293D77BE00C54F30 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -583,6 +591,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8505678E293E557B007DCF95 /* XCRemoteSwiftPackageReference "kmm-proof-of-concept" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/garrison-henkle/kmm-proof-of-concept";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8505678F293E557B007DCF95 /* shared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8505678E293E557B007DCF95 /* XCRemoteSwiftPackageReference "kmm-proof-of-concept" */;
+			productName = shared;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 85536A5F293D77BE00C54F30 /* Project object */;
 }
