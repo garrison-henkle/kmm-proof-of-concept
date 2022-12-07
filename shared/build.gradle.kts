@@ -1,5 +1,6 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature
+import org.jetbrains.kotlin.gradle.plugin.mpp.BitcodeEmbeddingMode
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
@@ -34,6 +35,8 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
+            embedBitcode = BitcodeEmbeddingMode.BITCODE
+//            isStatic = true
             baseName = "shared"
 //            xcf.add(this)
         }
@@ -42,6 +45,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                //Note: change implementation to api to give android / iOS access to these
+                implementation(Deps.kermit)
                 implementation(Deps.kotlinxCoroutinesCore)
                 implementation(Deps.kotlinxDatetime)
                 implementation(Deps.ktorClientCore)
@@ -49,9 +54,8 @@ kotlin {
                 implementation(Deps.ktorClientLogging)
                 implementation(Deps.ktorSerializationKotlinxJson)
                 implementation(Deps.multiplatformSettingsCoroutines)
-                implementation(Deps.uuid)
+//                implementation(Deps.uuid)
 
-                api(Deps.kermit) //need api to export to iOS
             }
         }
         val commonTest by getting {
@@ -96,8 +100,6 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
     }
-
-
 }
 
 java {

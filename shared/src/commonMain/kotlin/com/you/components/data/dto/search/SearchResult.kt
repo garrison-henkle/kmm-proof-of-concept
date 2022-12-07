@@ -1,11 +1,10 @@
-package com.you.components.data.dto.video
+package com.you.components.data.dto.search
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class VideoResult(
+data class SearchResult(
     val count: Int,
-    val offset: Int,
     val page: Int,
     val searchResults: SearchResults
 )

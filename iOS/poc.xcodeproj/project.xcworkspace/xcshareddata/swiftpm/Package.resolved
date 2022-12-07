@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/garrison-henkle/kmm-proof-of-concept",
       "state" : {
-        "revision" : "1dbabbb6d27c8ca3f9cb81a3f0ccd53cb07caad8",
-        "version" : "0.0.7"
+        "revision" : "143018a24902edc81f5f965b0792854ecc351c65",
+        "version" : "0.0.11"
       }
     }
   ],

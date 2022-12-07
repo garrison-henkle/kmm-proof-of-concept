@@ -1,6 +1,7 @@
 plugins {
     id(Plugins.androidApplication).version(Versions.androidPlugin)
     id(Plugins.kotlinAndroid).version(Versions.kotlin)
+    id(Plugins.kotlinSerialization).version(Versions.kotlin)
 }
 
 android {
@@ -57,6 +58,7 @@ dependencies {
     implementation(Deps.androidxComposeMaterialIconsCore)
     implementation(Deps.androidxComposeMaterialIconsExtended)
     implementation(Deps.androidxComposeUi)
+    implementation(Deps.kotlinxSerialization)
 
     debugImplementation(Deps.androidxComposeUiTooling)
     debugImplementation(Deps.androidxComposeUiToolingPreview)

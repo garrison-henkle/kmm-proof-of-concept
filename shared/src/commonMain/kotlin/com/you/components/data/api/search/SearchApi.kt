@@ -1,23 +1,23 @@
-package com.you.components.data.api.video
+package com.you.components.data.api.search
 
 import com.you.components.data.api.SearchableApi
 import com.you.components.data.api.YouApi
 import com.you.components.data.api.buildYouApiResponse
 import com.you.components.data.api.youApiCall
-import com.you.components.data.dto.video.VideoResult
-import com.you.components.data.model.Video
+import com.you.components.data.dto.search.SearchResult
+import com.you.components.data.model.Webpage
 import com.you.components.utils.Response
 import com.you.components.utils.client
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import kotlinx.serialization.Serializable
 
-interface VideoApi : SearchableApi<VideoList, YouApi.Parameters>
+interface SearchApi : SearchableApi<WebpageList, YouApi.Parameters>
 
-class YouVideoApi : VideoApi {
+class YouSearchApi : SearchApi {
     override suspend fun search(
         parameters: YouApi.Parameters
-    ): Response<VideoList> {
+    ): Response<WebpageList> {
         val response = client.request {
             youApiCall(
                 query = parameters.query,
@@ -25,17 +25,17 @@ class YouVideoApi : VideoApi {
                 count = parameters.count,
                 page = parameters.page,
                 freshness = parameters.freshness,
-                path = arrayOf("api", "video")
+                path = arrayOf("api", "search")
             )
         }
         return response.buildYouApiResponse {
-            val result = response.body<VideoResult>()
-            val videos = result.searchResults.results
-                .map(Video.Companion::fromVideoResult)
-            VideoList(videos)
+            val result = response.body<SearchResult>()
+            val webpages = result.searchResults.mainline.bing_search_results
+                .map(Webpage.Companion::fromSearchResult)
+            WebpageList(webpages)
         }
     }
 }
 
 @Serializable
-data class VideoList(val data: List<Video>)
+data class WebpageList(val data: List<Webpage>)
