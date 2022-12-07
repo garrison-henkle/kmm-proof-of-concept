@@ -1,5 +1,6 @@
 package com.you.components.utils
 
+import co.touchlab.kermit.Logger
 import platform.Foundation.*
 
 actual class CFile actual constructor(filename: String, androidFilesDirPath: String?){
@@ -19,8 +20,16 @@ actual class CFile actual constructor(filename: String, androidFilesDirPath: Str
         error = null
     )
 
+    actual fun createDirectories(): Boolean = NSFileManager.defaultManager.createDirectoryAtPath(
+        path = filePath,
+        withIntermediateDirectories = true,
+        attributes = null,
+        error = null
+    )
+
     actual companion object{
         private val directory by lazy{
+            Logger.i("You.com"){ "is debug: ${Platform.isDebugBinary}" }
             NSSearchPathForDirectoriesInDomains(
                 directory = NSDocumentDirectory,
                 domainMask = NSUserDomainMask,

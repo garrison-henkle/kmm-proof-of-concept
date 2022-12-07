@@ -14,6 +14,7 @@ object Versions {
     const val kotlin = "1.7.20"
     const val kotlinx = "1.6.4"
     const val kotlinxDatetime = "0.4.0"
+    const val kotlinxSerialization = "1.4.1"
     const val kswift = "0.6.1"
     const val ktor = "2.1.3"
     const val sqldelight = "1.5.3"
@@ -53,6 +54,7 @@ object Deps {
     const val kotlinxCoroutinesTest =
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinx}"
     const val kotlinxDatetime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDatetime}"
+    const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxSerialization}"
     const val ktorClientAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
     const val ktorClientContentNegotiation =
         "io.ktor:ktor-client-content-negotiation:${Versions.ktor}"

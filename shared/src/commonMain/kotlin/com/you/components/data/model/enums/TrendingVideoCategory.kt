@@ -1,4 +1,9 @@
 package com.you.components.data.model.enums
 
-class TrendingVideoCategory {
+enum class TrendingVideoCategory {
+    Movies,
+    Gaming,
+    News,
+    Sports,
+    Podcast
 }

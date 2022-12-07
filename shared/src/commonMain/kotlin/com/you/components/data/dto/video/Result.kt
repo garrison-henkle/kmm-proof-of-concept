@@ -1,6 +1,8 @@
 package com.you.components.data.dto.video
 
-@kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Result(
     val contentUrl: String,
     val datePublished: String,

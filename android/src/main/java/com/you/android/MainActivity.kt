@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
-import co.touchlab.kermit.Logger
 import com.you.components.data.api.video.YouVideoApi
-import com.you.components.data.model.Freshness
+import com.you.components.data.repository.VideoRepository
+import com.you.components.utils.CachedEndpoint
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -16,16 +16,12 @@ class MainActivity : ComponentActivity() {
 
         }
 
-        val api = YouVideoApi()
-
+        val repo = VideoRepository(YouVideoApi(), filesDir.absolutePath)
         lifecycleScope.launch {
-            val result = api.search(
-                query = "United States",
-                site = null,
-                resultCount = 25,
-                freshness = Freshness.Day
-            )
-            Logger.i("You.com"){ "result: $result" }
+            CachedEndpoint.initializeCacheDirectory(androidFilesDir = filesDir.absolutePath)
+            val results =
+                repo.getVideos(query = "hamsters drive cars across the united states during their hunting season to try to find humans that look like easy pickings. This is a speedrun video that does not actually demonstrate any speedrunning or speedrunning skills. If I make this any longer, I believe it will return absolutely no results back from the API. www.www.ww.ww.ww.ww.")
+            android.util.Log.i("You.com", "results: $results")
         }
     }
 }

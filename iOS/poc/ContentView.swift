@@ -10,12 +10,17 @@ import shared
 
 struct ContentView: View {
     init(){
+        CachedEndpointCompanion().initializeCacheDirectory(androidFilesDir: nil){ _, _ in }
+        print(NSHomeDirectory())
+        let directories = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        print(directories.first.debugDescription)
         let api = YouVideoApi()
-        api.search(query: "world cup", site: nil, resultCount: 50, freshness: Freshness.any){ responseKt, error in
+        let repo = VideoRepository(api: api, filesDir: nil)
+        repo.getVideos(query: "world cup", site: nil, count: 50, freshness: Freshness.any, id: 0){ responseKt, error in
             let response = Response<VideoList>(responseKt!)
             switch(response){
             case .success(let resp):
-                let first = resp.response.data.first
+                let first = resp.result.data.first
                 print(first.debugDescription)
             case .error(let error):
                 print("Error occurred: \(error.ex)")

@@ -40,5 +40,12 @@ fun String.removeHitMarkers(): String {
         }
     }
     return builder.toString()
+}
 
+/**
+ * Converts an API response into a nullable, where null is the error state
+ */
+fun <T: Any> Response<T>.toNullable(): T? = when(this){
+    is Response.Success -> result
+    is Response.Error -> null
 }
