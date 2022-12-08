@@ -1,9 +1,9 @@
 // swift-tools-version:5.3
 import PackageDescription
 
-let remoteKotlinUrl = "https://api.github.com/repos/garrison-henkle/kmm-proof-of-concept/releases/assets/87352275.zip"
-let remoteKotlinChecksum = "847062cb96650bf022a857010a9fd793bde62dbb1e35d74bcd843443c4fb2ac7"
-let packageName = "shared"
+let remoteKotlinUrl = "https://api.github.com/repos/garrison-henkle/kmm-proof-of-concept/releases/assets/87503786.zip"
+let remoteKotlinChecksum = "1ed6beddd19efcc8e334d0801b2fc072cfe3a539f67a23146a2d84400c75c485"
+let packageName = "YouComponents"
 
 let package = Package(
     name: packageName,
