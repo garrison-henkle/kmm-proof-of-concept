@@ -1,4 +1,5 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+import org.jetbrains.kotlin.gradle.plugin.mpp.BitcodeEmbeddingMode.DISABLE
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
 val localProperties = loadProperties(rootProject.file("local.properties").absolutePath)
@@ -33,6 +34,7 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "YouComponents"
+            embedBitcode = DISABLE
 //            xcf.add(this)
         }
     }
