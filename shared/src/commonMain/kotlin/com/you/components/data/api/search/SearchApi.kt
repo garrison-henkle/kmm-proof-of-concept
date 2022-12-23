@@ -2,7 +2,7 @@ package com.you.components.data.api.search
 
 import com.you.components.data.api.SearchableApi
 import com.you.components.data.api.YouApi
-import com.you.components.data.api.buildYouApiResponse
+import com.you.components.data.api.parse
 import com.you.components.data.api.youApiCall
 import com.you.components.data.dto.search.SearchResult
 import com.you.components.data.model.Webpage
@@ -28,7 +28,7 @@ class YouSearchApi : SearchApi {
                 path = arrayOf("api", "search")
             )
         }
-        return response.buildYouApiResponse {
+        return response.parse {
             val result = response.body<SearchResult>()
             val webpages = result.searchResults.mainline.bing_search_results
                 .map(Webpage.Companion::fromSearchResult)

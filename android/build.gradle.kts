@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id(Plugins.androidApplication).version(Versions.androidPlugin)
     id(Plugins.kotlinAndroid).version(Versions.kotlin)
@@ -7,6 +9,12 @@ plugins {
 android {
     namespace = Config.androidPackageName
     compileSdk = Config.compileSdkVersion
+
+    val localProperties = Properties().apply {
+        rootProject.file("local.properties").inputStream().use {
+            load(it)
+        }
+    }
 
     defaultConfig {
         applicationId = Config.androidPackageName
@@ -19,6 +27,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        resValue(
+            type = "string",
+            name = "twitter_api_key",
+            value = localProperties.getProperty("twitterApiKey")!!
+        )
     }
 
     buildTypes {
