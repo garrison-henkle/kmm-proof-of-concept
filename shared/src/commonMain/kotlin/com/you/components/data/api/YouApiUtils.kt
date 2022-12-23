@@ -6,6 +6,7 @@ import com.you.components.utils.Response
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import kotlinx.serialization.SerializationException
 
 object YouApi {
     const val queryKey = "q"
@@ -16,15 +17,6 @@ object YouApi {
     const val domainKey = "domain"
     const val safeSearchKey = "safeSearch"
     const val searchDomain = "search"
-
-    fun parseParameters(parameterMap: Map<String, Any?>): SearchableApi.Parameters? {
-        val query = (parameterMap[queryKey] as String?) ?: return null
-        val site = parameterMap[siteKey] as String?
-        val count = parameterMap[countKey] as Int? ?: return null
-        val page = parameterMap[pageKey] as Int? ?: return null
-        val freshness = parameterMap[freshnessKey] as? Freshness ?: return null
-        return SearchableApi.Parameters(query, site, count, page, freshness)
-    }
 
     data class Parameters(
         val query: String,
@@ -81,14 +73,24 @@ fun HttpRequestBuilder.youApiCall(
 }
 
 /**
- * Builds the Response object from a You.com API HTTP response.
+ * Builds a [Response] object from the provided [HttpResponse].
+ *
+ * A successful request will use the provided [parse] lambda to create a [Response.Success] object.
+ *
+ * Failed requests will result in a [Response.Error] containing the error.
  *
  * @param parse The lambda to parse successful API calls
  */
-suspend fun <T : Any> HttpResponse.buildYouApiResponse(
+suspend fun <T : Any> HttpResponse.parse(
     parse: suspend HttpResponse.() -> T
 ): Response<T> = when (status) {
-    HttpStatusCode.OK -> Response.Success(parse())
+    HttpStatusCode.OK -> {
+        try {
+            Response.Success(parse())
+        } catch (ex: SerializationException) {
+            Response.Error(ex)
+        }
+    }
     else -> Response.Error(
         ex = Exception(bodyAsText()),
         status = status.value

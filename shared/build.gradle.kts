@@ -1,7 +1,4 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
-import dev.icerock.moko.kswift.plugin.feature.SealedToSwiftEnumFeature
-import org.jetbrains.kotlin.gradle.plugin.mpp.BitcodeEmbeddingMode
-import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
 val localProperties = loadProperties(rootProject.file("local.properties").absolutePath)
@@ -21,7 +18,7 @@ plugins {
     id(Plugins.kmmBridge).version(Versions.kmmBridge)
     id(Plugins.kotlinMultiplatform).version(Versions.kotlin)
     id(Plugins.kotlinSerialization).version(Versions.kotlin)
-    id(Plugins.kswift).version(Versions.kswift)
+//    id(Plugins.kswift).version(Versions.kswift)
 //    id(Plugins.sqldelight).version(Versions.sqldelight)
 }
 
@@ -35,9 +32,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            embedBitcode = BitcodeEmbeddingMode.BITCODE
-//            isStatic = true
-            baseName = "shared"
+            baseName = "YouComponents"
 //            xcf.add(this)
         }
     }
@@ -55,7 +50,6 @@ kotlin {
                 implementation(Deps.ktorSerializationKotlinxJson)
                 implementation(Deps.multiplatformSettingsCoroutines)
 //                implementation(Deps.uuid)
-
             }
         }
         val commonTest by getting {
@@ -102,6 +96,10 @@ kotlin {
     }
 }
 
+dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2") //do not upgrade
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -114,12 +112,18 @@ android {
         minSdk = Config.minSdkVersion
         targetSdk = Config.targetSdkVersion
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 buildkonfig {
     packageName = Config.packageName
 
     val apiDomain = "apiDomain"
+    val twitterApiKey = "twitterApiKey"
 
     defaultConfigs {
         buildConfigField(
@@ -138,9 +142,9 @@ kmmbridge {
     versionPrefix.set("0.0")
 }
 
-kswift {
-    install(SealedToSwiftEnumFeature)
-}
+//kswift {
+//    install(SealedToSwiftEnumFeature)
+//}
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions {
@@ -153,7 +157,7 @@ task("publishKMMArtifacts", type = GradleBuild::class) {
     val repo = localProperties.getProperty("githubRepo")
     startParameter.projectProperties = mapOf(
         "GITHUB_PUBLISH_TOKEN" to token,
-        "GITHUB_REPO" to repo
+        "GITHUB_REPO" to repo,
     )
     tasks = listOf("kmmBridgePublish")
 }

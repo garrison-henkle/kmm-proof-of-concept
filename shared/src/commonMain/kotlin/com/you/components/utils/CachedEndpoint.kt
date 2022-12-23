@@ -1,5 +1,6 @@
 package com.you.components.utils
 
+import co.touchlab.kermit.Logger
 import com.you.components.data.api.SearchableApi
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
@@ -50,8 +51,12 @@ class CachedEndpoint<T : Any, P : Any>(
         val cache = if (CFile.exists(filename, androidFilesDirPath = androidFilesDir)) {
             CFile(filename, androidFilesDirPath = androidFilesDir).readAll()
         } else null
-        cache?.let { parseCacheString(it) }
+        cache?.let {
+            Logger.i("You.com") { "using cache for $name" }
+            parseCacheString(it)
+        }
             ?: api.search(parameters).also { response ->
+                Logger.i("You.com") { "fetching $name" }
                 if (response is Response.Success) {
                     val data = response.result
                     val isNotEmpty = !data.isEmpty()

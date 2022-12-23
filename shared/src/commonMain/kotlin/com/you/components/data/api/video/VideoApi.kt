@@ -2,7 +2,7 @@ package com.you.components.data.api.video
 
 import com.you.components.data.api.SearchableApi
 import com.you.components.data.api.YouApi
-import com.you.components.data.api.buildYouApiResponse
+import com.you.components.data.api.parse
 import com.you.components.data.api.youApiCall
 import com.you.components.data.dto.video.VideoResult
 import com.you.components.data.model.Video
@@ -28,7 +28,7 @@ class YouVideoApi : VideoApi {
                 path = arrayOf("api", "video")
             )
         }
-        return response.buildYouApiResponse {
+        return response.parse {
             val result = response.body<VideoResult>()
             val videos = result.searchResults.results
                 .map(Video.Companion::fromVideoResult)
